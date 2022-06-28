@@ -12,6 +12,10 @@ class Solver(BaseSolver):
     install_cmd = 'conda'
     requirements = ['mkl', 'pip:cyanure-mkl']
 
+    parameters = {
+        'solver': ['catalyst-miso', 'qning-miso', 'qning-ista',  'auto',  'acc-svrg'],
+    }
+
     def set_objective(self, X, y, lmbd):
         self.X, self.y, self.lmbd = X, y, lmbd
         if (scipy.sparse.issparse(self.X) and
@@ -22,7 +26,7 @@ class Solver(BaseSolver):
                                        fit_intercept=False)
         self.solver_parameter = dict(
             lambd=self.lmbd / self.X.shape[0], solver='auto', it0=1000000,
-            tol=1e-12, verbose=False
+            tol=1e-12, verbose=False, solver=self.solver
         )
 
     def run(self, n_iter):

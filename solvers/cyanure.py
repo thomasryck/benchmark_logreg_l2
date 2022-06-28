@@ -15,6 +15,10 @@ class Solver(BaseSolver):
     install_cmd = 'conda'
     requirements = ['cyanure']
 
+    parameters = {
+        'solver': ['catalyst-miso', 'qning-miso', 'qning-ista',  'auto',  'acc-svrg'],
+    }
+
     def set_objective(self, X, y, lmbd):
         self.X, self.y, self.lmbd = X, y, lmbd
         if (scipy.sparse.issparse(self.X) and
@@ -26,7 +30,7 @@ class Solver(BaseSolver):
 
         self.solver_parameter = dict(
         lambda_1=self.lmbd / self.X.shape[0], solver='auto', duality_gap_interval=10,
-        tol=1e-12, verbose=False
+        tol=1e-12, verbose=False, solver=self.solver
         )
 
         self.solver = estimators.Classifier(loss='logistic', penalty='l2',
@@ -39,4 +43,4 @@ class Solver(BaseSolver):
         self.solver.fit(self.X, self.y)
 
     def get_result(self):
-        return np.squeeze(self.solver.get_weights())
+        return self.solver.get_weights()
