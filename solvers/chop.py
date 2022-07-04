@@ -7,6 +7,7 @@ with safe_import_context() as import_ctx:
     from torch.utils.data import DataLoader
     from torch.utils.data.dataset import TensorDataset
     import chop
+    import scipy
 
 
 class Solver(BaseSolver):
@@ -52,7 +53,7 @@ class Solver(BaseSolver):
                 msg = 'Momentum is not used for full batch optimizers.'
                 return True, msg
 
-        if scipy.sparse.issparse(X) and scipy.sparse.issparse(labels):
+        if scipy.sparse.issparse(X) and scipy.sparse.issparse(y):
             msg = 'Crash with sparse matrices.'
             return True, msg
 
