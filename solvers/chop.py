@@ -52,6 +52,10 @@ class Solver(BaseSolver):
                 msg = 'Momentum is not used for full batch optimizers.'
                 return True, msg
 
+        if scipy.sparse.issparse(X) and scipy.sparse.issparse(labels):
+            msg = 'Crash with sparse matrices.'
+            return True, msg
+
         return False, None
 
     def set_objective(self, X, y, lmbd):
