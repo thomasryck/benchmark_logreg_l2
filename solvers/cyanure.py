@@ -4,13 +4,15 @@ from benchopt import BaseSolver, safe_import_context
 
 
 with safe_import_context() as import_ctx:
+    import sys
     import scipy
     import numpy as np
     from cyanure import estimators
+    from cyanure.data_processing import preprocess
 
-
+# 'solver': ['catalyst-miso', 'qning-miso', 'qning-ista',  'auto',  'acc-svrg']
 class Solver(BaseSolver):
-    name = 'cyanure'
+    name = 'cyanure_norm'
 
     install_cmd = 'conda'
     requirements = ['cyanure']
@@ -26,20 +28,41 @@ class Solver(BaseSolver):
 
         warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
-
         self.solver_parameter = dict(
-        lambda_1=self.lmbd / self.X.shape[0], duality_gap_interval=10,
-        tol=1e-12, verbose=False, solver=self.solver
+        lambda_1=1.0 / X.shape[0], duality_gap_interval=100,
+        tol=1e-15, verbose=True, solver=self.solver, max_iter=1000
         )
 
         self.solver_instance = estimators.Classifier(loss='logistic', penalty='l2',
                                        fit_intercept=False,
                         **self.solver_parameter)
+
+        self.dataset = "New dataset"
        
+    def compute_relative_optimality_gap(self):
+        min_eval=100
+        max_dual=-100
+        self.solver_instance.optimization_info_ = np.squeeze(self.solver_instance.optimization_info_)
+        if len(self.solver_instance.optimization_info_.shape) > 1 :
+            min_eval=min(min_eval,np.min(self.solver_instance.optimization_info_[1,]))
+            max_dual=max(max_dual,np.max(self.solver_instance.optimization_info_[2,]))
+            info = np.array(np.maximum((self.solver_instance.optimization_info_[1,]-max_dual)/min_eval,1e-9))
+        
+        else:
+            min_eval=min(min_eval,np.min(self.solver_instance.optimization_info_[1]))
+            max_dual=max(max_dual,np.max(self.solver_instance.optimization_info_[2]))
+            info = np.array(np.maximum((self.solver_instance.optimization_info_[1]-max_dual)/min_eval,1e-9))
+
+        return info
 
     def run(self, n_iter):
+        print("############################################################", file=sys.stderr)
+        print("The benchmark is running on: " + str(self.dataset) + " dataset!!!", file=sys.stderr)
+        print("############################################################", file=sys.stderr)
         self.solver_instance.max_iter = n_iter
         self.solver_instance.fit(self.X, self.y)
+        # self.solver_instance.coef_ = self.vec_norm * self.solver_instance.coef_
+        print("This is relative optimality gap: " + str(self.compute_relative_optimality_gap()), file=sys.stderr)
 
     def get_result(self):
         return np.squeeze(self.solver_instance.get_weights())
