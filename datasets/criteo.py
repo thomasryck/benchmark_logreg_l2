@@ -22,8 +22,8 @@ class Dataset(BaseDataset):
     def get_data(self):
 
         if self.X is None:
-            path_X = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_X.npz", "/scratch/clear/tryckebo/dataset_test")
-            path_y = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_y.npz", "/scratch/clear/tryckebo/dataset_test")
+            path_X = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_X.npz", "/scratch/clear/tryckebo/dataset_test/criteo_X.npz")
+            path_y = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_y.npz", "/scratch/clear/tryckebo/dataset_test/criteo_y.npz")
             dataY=np.load(os.path.join(path_y), allow_pickle=True)
             y=dataY['arr_0']
             self.X = scipy.sparse.load_npz(os.path.join(path_X))
