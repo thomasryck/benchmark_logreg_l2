@@ -24,7 +24,7 @@ class Objective(BaseObjective):
         self.X, self.y = X, y
         self.X_test, self.y_test = X_test, y_test
         msg = "Logistic loss is implemented with y in [-1, 1]"
-        assert set(self.y) == {-1, 1}, msg
+        # assert set(self.y) == {-1, 1}, msg
 
     def get_one_solution(self):
         return np.zeros((self.X.shape[1]))
