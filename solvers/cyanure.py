@@ -29,7 +29,7 @@ class Solver(BaseSolver):
         warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
         self.solver_parameter = dict(
-        lambda_1=1.0 / X.shape[0], duality_gap_interval=100,
+        lambda_1= self.lmbd / X.shape[0], duality_gap_interval=10000000,
         tol=1e-15, verbose=True, solver=self.solver, max_iter=1000
         )
 
@@ -56,13 +56,8 @@ class Solver(BaseSolver):
         return info
 
     def run(self, n_iter):
-        print("############################################################", file=sys.stderr)
-        print("The benchmark is running on: " + str(self.dataset) + " dataset!!!", file=sys.stderr)
-        print("############################################################", file=sys.stderr)
         self.solver_instance.max_iter = n_iter
         self.solver_instance.fit(self.X, self.y)
-        # self.solver_instance.coef_ = self.vec_norm * self.solver_instance.coef_
-        print("This is relative optimality gap: " + str(self.compute_relative_optimality_gap()), file=sys.stderr)
 
     def get_result(self):
         return np.squeeze(self.solver_instance.get_weights())

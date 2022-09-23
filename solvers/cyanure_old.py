@@ -26,7 +26,7 @@ class Solver(BaseSolver):
                                        fit_intercept=False)
         self.solver_parameter = dict(
             lambd=self.lmbd / self.X.shape[0], it0=1000000,
-            tol=1e-12, verbose=False, solver=self.solver
+            tol=1e-15, verbose=False, solver=self.solver
         )
 
     def run(self, n_iter):
