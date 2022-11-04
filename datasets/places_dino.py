@@ -10,12 +10,8 @@ with safe_import_context() as import_ctx:
 
 
 class Dataset(BaseDataset):
-    name = "dino"
+    name = "dino_places"
     is_sparse = True
-
-    install_cmd = 'conda'
-    requirements = ['pip:libsvmdata']
-
     def __init__(self):
         self.X, self.y = None, None
 

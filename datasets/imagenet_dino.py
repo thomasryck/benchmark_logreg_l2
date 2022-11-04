@@ -10,7 +10,7 @@ with safe_import_context() as import_ctx:
 
 
 class Dataset(BaseDataset):
-    name = "dino"
+    name = "dino_imagenet"
     is_sparse = True
 
     install_cmd = 'conda'
