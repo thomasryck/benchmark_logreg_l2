@@ -7,6 +7,7 @@ with safe_import_context() as import_ctx:
     import scipy
     from download import download
     import numpy as np
+    from appdirs import user_cache_dir
 
 
 class Dataset(BaseDataset):
@@ -14,7 +15,7 @@ class Dataset(BaseDataset):
     is_sparse = True
 
     install_cmd = 'conda'
-    requirements = ['pip:libsvmdata']
+    requirements = ['pip:appdirs']
 
     def __init__(self):
         self.X, self.y = None, None
@@ -22,8 +23,9 @@ class Dataset(BaseDataset):
     def get_data(self):
 
         if self.X is None:
-            path_X = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_X.npz", "/scratch/clear/tryckebo/dataset_test/criteo_X.npz")
-            path_y = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_y.npz", "/scratch/clear/tryckebo/dataset_test/criteo_y.npz")
+            cachedir = user_cache_dir("Cyanure") 
+            path_X = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_X.npz", os.path.join(cachedir, "criteo_X.npz"))
+            path_y = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_y.npz", os.path.join(cachedir, "criteo_y.npz"))
             dataY=np.load(os.path.join(path_y), allow_pickle=True)
             y=dataY['arr_0']
             self.X = scipy.sparse.load_npz(os.path.join(path_X))
