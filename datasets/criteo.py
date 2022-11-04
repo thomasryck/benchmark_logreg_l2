@@ -8,7 +8,6 @@ with safe_import_context() as import_ctx:
     import scipy
     from download import download
     import numpy as np
-    from appdirs import user_cache_dir
 
 
 class Dataset(BaseDataset):
