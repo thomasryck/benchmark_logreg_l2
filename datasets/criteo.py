@@ -1,3 +1,4 @@
+import benchopt
 from benchopt import BaseDataset, safe_import_context
 
 
@@ -23,7 +24,7 @@ class Dataset(BaseDataset):
     def get_data(self):
 
         if self.X is None:
-            cachedir = user_cache_dir("Cyanure") 
+            cachedir = os.path.dirname(benchopt.__file__) + os.path.sep + "cache"
             path_X = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_X.npz", os.path.join(cachedir, "criteo_X.npz"))
             path_y = download("http://pascal.inrialpes.fr/data2/mairal/data/criteo_y.npz", os.path.join(cachedir, "criteo_y.npz"))
             dataY=np.load(os.path.join(path_y), allow_pickle=True)
