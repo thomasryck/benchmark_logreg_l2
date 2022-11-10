@@ -17,3 +17,5 @@ def check_test_solver_install(solver_class):
             pytest.xfail("Cuml is not supported on MacOS.")
         if cuda_version is None:
             pytest.xfail("Cuml needs a working GPU hardware.")
+    if solver_class.name.lower() == "cyanure_old":
+            pytest.xfail("Can not xork without a manual rename of a file.")
