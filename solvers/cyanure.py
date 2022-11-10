@@ -2,13 +2,11 @@ from benchopt import BaseSolver, safe_import_context
 
 
 with safe_import_context() as import_ctx:
-    import sys
     import scipy
     import numpy as np
     from cyanure import estimators
     import warnings
     from sklearn.exceptions import ConvergenceWarning
-    from cyanure.data_processing import preprocess
 
 # 'solver': ['catalyst-miso', 'qning-miso', 'qning-ista',  'auto',  'acc-svrg']
 class Solver(BaseSolver):
