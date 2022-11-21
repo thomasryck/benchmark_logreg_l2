@@ -8,7 +8,7 @@ with safe_import_context() as import_ctx:
     import warnings
     from sklearn.exceptions import ConvergenceWarning
 
-# 'solver': ['catalyst-miso', 'qning-miso', 'qning-ista',  'auto',  'acc-svrg']
+
 class Solver(BaseSolver):
     name = 'cyanure_norm'
 
@@ -16,12 +16,15 @@ class Solver(BaseSolver):
     requirements = ['cyanure']
 
     parameters = {
-        'solver': ['catalyst-miso', 'qning-miso', 'qning-ista',  'auto',  'acc-svrg']
+        'solver': ['catalyst-miso', 'qning-miso', 
+                   'qning-ista',  'auto',  'acc-svrg']
     }
+
     def set_objective(self, X, y, lmbd):
         self.X, self.y, self.lmbd = X, y, lmbd
+
         if (scipy.sparse.issparse(self.X) and
-                scipy.sparse.isspmatrix_csc(self.X)):
+            scipy.sparse.isspmatrix_csc(self.X)):
             self.X = scipy.sparse.csr_matrix(self.X)
 
         warnings.filterwarnings('ignore', category=ConvergenceWarning)
