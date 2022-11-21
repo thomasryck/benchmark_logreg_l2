@@ -11,10 +11,13 @@ with safe_import_context() as import_ctx:
 
 class Dataset(BaseDataset):
     name = "ocr"
-    is_sparse = True
+    is_sparse = False
 
     install_cmd = 'conda'
     requirements = ['pip:libsvmdata']
+
+    root_url = "http://pascal.inrialpes.fr/data2/cyanure/datasets"
+    url = root_url + "/ocr.npz"
 
     def __init__(self):
         self.X, self.y = None, None
@@ -22,8 +25,10 @@ class Dataset(BaseDataset):
     def get_data(self):
 
         if self.X is None:
-            cachedir = os.path.dirname(benchopt.__file__) + os.path.sep + "cache"
-            path = download("http://pascal.inrialpes.fr/data2/mairal/data/ocr.npz", os.path.join(cachedir, "ocr.npz"))
+            root_path = os.path.dirname(benchopt.__file__)
+            cachedir = root_path + os.path.sep + "cache"
+            path = download(self.url, 
+                            os.path.join(cachedir, "ocr.npz"))
             data = np.load(path)
             self.y = data['arr_1']
             self.y = np.squeeze(self.y)
