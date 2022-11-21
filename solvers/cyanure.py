@@ -24,7 +24,7 @@ class Solver(BaseSolver):
         self.X, self.y, self.lmbd = X, y, lmbd
 
         if (scipy.sparse.issparse(self.X) and
-            scipy.sparse.isspmatrix_csc(self.X)):
+                scipy.sparse.isspmatrix_csc(self.X)):
             self.X = scipy.sparse.csr_matrix(self.X)
 
         warnings.filterwarnings('ignore', category=ConvergenceWarning)
