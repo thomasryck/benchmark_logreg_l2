@@ -16,7 +16,7 @@ class Solver(BaseSolver):
     requirements = ['cyanure']
 
     parameters = {
-        'solver': ['catalyst-miso', 'qning-miso', 
+        'solver': ['catalyst-miso', 'qning-miso',
                    'qning-ista',  'auto',  'acc-svrg']
     }
 
@@ -29,14 +29,15 @@ class Solver(BaseSolver):
 
         warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
-        self.solver_parameter = dict(
-        lambda_1= self.lmbd / X.shape[0], duality_gap_interval=10000000,
-        tol=1e-15, verbose=True, solver=self.solver, max_iter=1000
-        )
+        self.solver_parameter = dict(lambda_1= self.lmbd / X.shape[0],
+                                        duality_gap_interval=10000000,
+                                        tol=1e-15, verbose=True, 
+                                        solver=self.solver, max_iter=1000)
 
-        self.solver_instance = estimators.Classifier(loss='logistic', penalty='l2',
-                                       fit_intercept=False,
-                        **self.solver_parameter)
+        self.solver_instance = estimators.Classifier(loss='logistic', 
+                                                    penalty='l2',
+                                                    fit_intercept=False,
+                                                    **self.solver_parameter)
 
     def run(self, n_iter):
         self.solver_instance.max_iter = n_iter
