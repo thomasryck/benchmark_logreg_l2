@@ -27,7 +27,7 @@ class Dataset(BaseDataset):
         if self.X is None:
             root_path = os.path.dirname(benchopt.__file__)
             cachedir = root_path + os.path.sep + "cache"
-            path = download(self.url, 
+            path = download(self.url,
                             os.path.join(cachedir, "ocr.npz"))
             data = np.load(path)
             self.y = data['arr_1']
