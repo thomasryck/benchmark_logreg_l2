@@ -1,7 +1,7 @@
 import sys  # noqa: F401
 import pytest  # noqa: F401
 
-from benchopt.utils.sys_info import _get_cuda_version
+from benchopt.utils.sys_info import get_cuda_version
 
 
 def check_test_solver_install(solver_class):
@@ -11,11 +11,11 @@ def check_test_solver_install(solver_class):
     particular architecture, call pytest.xfail when
     detecting the situation.
     """
-    cuda_version = _get_cuda_version()
+    cuda_version = get_cuda_version()
     if solver_class.name.lower() == "cuml":
         if sys.platform == "darwin":
             pytest.xfail("Cuml is not supported on MacOS.")
         if cuda_version is None:
             pytest.xfail("Cuml needs a working GPU hardware.")
     if solver_class.name.lower() == "cyanure_old":
-            pytest.xfail("Can not work without a manual rename of a file.")
+            pytest.xfail("Can not xork without a manual rename of a file.")
