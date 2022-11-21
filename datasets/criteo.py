@@ -29,9 +29,9 @@ class Dataset(BaseDataset):
         if self.X is None:
             root_path = os.path.dirname(benchopt.__file__)
             cachedir = root_path + os.path.sep + "cache"
-            path_X = download(self.x_url, 
+            path_X = download(self.x_url,
                               os.path.join(cachedir, "criteo_X.npz"))
-            path_y = download(self.y_url, 
+            path_y = download(self.y_url,
                               os.path.join(cachedir, "criteo_y.npz"))
             dataY = np.load(os.path.join(path_y), allow_pickle=True)
             y = dataY['arr_0']
