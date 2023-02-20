@@ -10,10 +10,10 @@ with safe_import_context() as import_ctx:
 
 
 class Solver(BaseSolver):
-    name = 'cyanure_norm'
+    name = 'cyanure'
 
-    install_cmd = 'conda'
-    requirements = ['cyanure']
+    install_cmd = 'pip'
+    requirements = ['pip:git+https://github.com/inria-thoth/cyanure.git@debug-cluster']
 
     parameters = {
         'solver': ['catalyst-miso', 'qning-miso',
