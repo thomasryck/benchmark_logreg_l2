@@ -49,6 +49,13 @@ class Solver(BaseSolver):
                 penalty='l2', fit_intercept=False, tol=1e-15
             )
 
+    def skip(self, X, y, lmbd, name):
+        if self.solver == "sgd":
+            if self.name == 'criteo' or self.name == 'kddb' or self.name == 'webspam':
+                msg = "Crash"
+
+        return False, None
+
     def run(self, n_iter):
         if self.solver == "sgd":
             n_iter += 1
