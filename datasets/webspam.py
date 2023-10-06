@@ -11,12 +11,12 @@ with safe_import_context() as import_ctx:
 
 
 class Dataset(BaseDataset):
-    name = "criteo"
+    name = "webspam"
     is_sparse = True
 
     root_url = "http://pascal.inrialpes.fr/data2/mairal/data/"
-    x_url = root_url + "/criteo_X.npz"
-    y_url = root_url + "/criteo_y.npz"
+    x_url = root_url + "/webspam_X.npz"
+    y_url = root_url + "/webspam_y.npz"
 
     def __init__(self):
         self.X, self.y = None, None
@@ -27,9 +27,9 @@ class Dataset(BaseDataset):
             print(root_path)
             cachedir = root_path + os.path.sep + "cache"
             path_X = download(self.x_url,
-                              os.path.join(cachedir, "criteo_X.npz"))
+                              os.path.join(cachedir, "webspam_X.npz"))
             path_y = download(self.y_url,
-                              os.path.join(cachedir, "criteo_y.npz"))
+                              os.path.join(cachedir, "webspam_y.npz"))
             self.X = scipy.sparse.load_npz(os.path.join(path_X))
             self.y = np.load(os.path.join(path_y), allow_pickle=True)
             self.y=self.y['arr_0']
