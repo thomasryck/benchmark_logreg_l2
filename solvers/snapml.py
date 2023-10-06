@@ -1,5 +1,5 @@
 from benchopt import BaseSolver, safe_import_context
-from benchopt.utils.sys_info import _get_cuda_version
+from benchopt.utils.sys_info import get_cuda_version
 
 
 with safe_import_context() as import_ctx:
@@ -15,12 +15,12 @@ class Solver(BaseSolver):
 
     parameters = {"gpu": [False, True]}
 
-    def skip(self, X, y, lmbd):
-        if self.gpu and _get_cuda_version() is None:
+    def skip(self, X, y, lmbd, name):
+        if self.gpu and get_cuda_version() is None:
             return True, "snapml[gpu=True] needs a GPU to run"
         return False, None
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         self.X, self.y, self.lmbd = X, y, lmbd
 
         self.clf = LogisticRegression(
@@ -41,4 +41,4 @@ class Solver(BaseSolver):
         self.clf.fit(self.X, self.y)
 
     def get_result(self):
-        return self.clf.coef_.flatten()
+        return np.transpose(self.clf.coef_)

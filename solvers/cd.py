@@ -42,7 +42,7 @@ class Solver(BaseSolver):
         'newton_step': [False, True],
         }
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         self.y, self.lmbd = y, lmbd
 
         if sparse.issparse(X):
@@ -73,6 +73,11 @@ class Solver(BaseSolver):
             self.w = self.cd(
                 self.X, self.y, self.lmbd, L, n_iter, self.newton_step
             )
+
+    def skip(self, X, y, lmbd, name):
+        if name == "criteo" or name == "kddb" or name == "webspam":
+            return True, "Seg fault !"
+        return False, None
 
     @staticmethod
     @njit

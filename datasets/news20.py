@@ -21,6 +21,6 @@ class Dataset(BaseDataset):
         if self.X is None:
             self.X, self.y = fetch_libsvm("news20.binary")
 
-        data = dict(X=self.X, y=self.y)
+        data = dict(X=self.X, y=self.y, name=self.name)
 
         return data

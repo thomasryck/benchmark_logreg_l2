@@ -29,7 +29,7 @@ class Solver(BaseSolver):
     }
     parameter_template = "{solver}"
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         self.X, self.y, self.lmbd = X, y, lmbd
 
         warnings.filterwarnings('ignore', category=ConvergenceWarning)

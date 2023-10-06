@@ -1,7 +1,7 @@
 from benchopt import BaseSolver, safe_import_context
-from benchopt.utils.sys_info import _get_cuda_version
+from benchopt.utils.sys_info import get_cuda_version
 
-cuda_version = _get_cuda_version()
+cuda_version = get_cuda_version()
 if cuda_version is not None:
     cuda_version = cuda_version.split("cuda_", 1)[1][:4]
 
@@ -33,7 +33,7 @@ class Solver(BaseSolver):
     support_sparse = False
     parameter_template = "{solver}"
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         self.X, self.y, self.lmbd = X, y, lmbd
         self.X = cudf.DataFrame(self.X.astype(np.float32))
         self.y = cudf.Series((self.y > 0).astype(np.float32))

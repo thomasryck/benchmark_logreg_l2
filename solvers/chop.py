@@ -25,7 +25,7 @@ class Solver(BaseSolver):
         'device': ['cpu', 'cuda']
         }
 
-    def skip(self, X, y, lmbd):
+    def skip(self, X, y, lmbd, name):
         if self.device == 'cuda' and not torch.cuda.is_available():
             return True, "CUDA is not available."
 
@@ -59,7 +59,7 @@ class Solver(BaseSolver):
 
         return False, None
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         self.lmbd = lmbd
 
         device = torch.device(self.device)

@@ -33,7 +33,12 @@ class Solver(BaseSolver):
         patience=7, eps=1e-38, strategy='tolerance'
     )
 
-    def set_objective(self, X, y, lmbd):
+    def skip(self, X, y, lmbd, name):
+        if name == "criteo":
+            return True, "X too large !"
+        return False, None
+
+    def set_objective(self, X, y, lmbd, name):
         if sparse.issparse(X):
             r_Matrix = packages.importr("Matrix")
             X = X.tocoo()

@@ -32,6 +32,6 @@ class Dataset(BaseDataset):
         X_test = rng.randn(self.n_samples, self.n_features)
         y_test = np.sign(X_test @ beta)
 
-        data = dict(X=X, y=y, X_test=X_test, y_test=y_test)
+        data = dict(X=X, y=y, name=self.name, X_test=X_test, y_test=y_test)
 
         return data

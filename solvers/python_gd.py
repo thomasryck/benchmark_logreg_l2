@@ -8,7 +8,7 @@ with safe_import_context() as import_ctx:
 class Solver(BaseSolver):
     name = 'Python-GD'  # gradient descent
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         self.X, self.y, self.lmbd = X, y, lmbd
 
     def run(self, n_iter):

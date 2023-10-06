@@ -13,7 +13,7 @@ class Solver(BaseSolver):
         'pip:git+https://github.com/scikit-learn-contrib/lightning.git'
     ]
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
 
         self.X, self.y, self.lmbd = X, y, lmbd
 

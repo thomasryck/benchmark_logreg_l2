@@ -21,7 +21,9 @@ class Solver(BaseSolver):
         'solver': ['pgd', 'svrg', 'saga'],
     }
 
-    def skip(self, X, y, lmbd):
+    def skip(self, X, y, lmbd, name):
+        if name == "criteo":
+            return True, "X too large !"
         if (X.shape[1] > 50_000) and self.solver not in ['svrg', 'saga']:
             return True, (
                 f"problem too large (n_features={X.shape[1]} > 50000) "
@@ -42,7 +44,7 @@ class Solver(BaseSolver):
 
         return False, None
 
-    def set_objective(self, X, y, lmbd):
+    def set_objective(self, X, y, lmbd, name):
         y = (y > 0).astype(np.float64)
         self.X, self.y, self.lmbd = X, y, lmbd
 
